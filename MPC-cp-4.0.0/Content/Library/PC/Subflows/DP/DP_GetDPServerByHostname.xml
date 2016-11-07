@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow id="e3c1cf4e-f971-4bdc-adaf-0e9fd5a0d94d">
+  <annotation></annotation>
+  <name>DP_GetDPServerByHostname</name>
+  <categories/>
+  <inputs>
+    <userInputBinding id="9b3e8ca8-4d18-4afb-af5b-9406a53175c9">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>dp.getdpserver.hostname</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <record>false</record>
+      <prompt></prompt>
+      <isMultiSelect>false</isMultiSelect>
+      <sourceDelimiter>|</sourceDelimiter>
+    </userInputBinding>
+  </inputs>
+  <scriptlet id="7f36cc92-4b04-4cca-9a58-9d1bdb517fe2">
+    <annotation></annotation>
+    <name>Operation DP_GetDPServerByHostname (e3c1cf4e-f971-4bdc-adaf-0e9fd5a0d94d)</name>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="2b9832b6-06e5-4398-9fac-4c7c6736f273">
+      <annotation></annotation>
+      <name>failure</name>
+      <isDefault>false</isDefault>
+      <onFailure>true</onFailure>
+      <type>ERROR</type>
+      <matchRules/>
+    </opResponse>
+    <opResponse id="3c7cf032-031f-44e1-9894-74878b1b9819">
+      <annotation></annotation>
+      <name>success</name>
+      <isDefault>true</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules/>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="7ed1525c-a947-4f96-bb7c-e33a8a77820a">
+    <annotation></annotation>
+    <name>FailureMessage</name>
+    <fieldName>FailureMessage</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="478bbda3-bdfb-4b3c-8ed7-b74246480238">
+    <baseIcon>flow.png</baseIcon>
+    <basePath>System</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <callouts/>
+  <checkPointFlow>true</checkPointFlow>
+  <compatibleRuntimeContext>false</compatibleRuntimeContext>
+  <historyCheckPointFlow>true</historyCheckPointFlow>
+  <steps>
+    <step id="30ae71a5-bd4b-4152-924e-fc68373f6ea7">
+      <annotation></annotation>
+      <name>DB_GetIDByHostname</name>
+      <bounds>
+        <x>90.0</x>
+        <y>174.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings>
+        <staticBinding id="56359912-1243-4568-b024-3953bf5c5a05">
+          <annotation></annotation>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>true</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>db.getid.hostname</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>${dp.getdpserver.hostname}</value>
+          <record>false</record>
+        </staticBinding>
+      </bindings>
+      <transitions>
+        <transition id="c93b958c-54ae-4c2d-94c6-3cae52b6a3f4">
+          <annotation></annotation>
+          <name>failure</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>83e86813-ac4b-4f93-b389-8d65693de9cf</refId>
+          </destination>
+          <source>
+            <refId>30ae71a5-bd4b-4152-924e-fc68373f6ea7</refId>
+          </source>
+          <positions>
+            <point>
+              <x>141.0</x>
+              <y>143.0</y>
+            </point>
+            <point>
+              <x>262.0</x>
+              <y>38.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+        <transition id="3fea6bbe-94ea-4fac-add5-6ca59595415a">
+          <annotation></annotation>
+          <name>success</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>success</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>ebb18cd7-30e6-481f-8dc1-df13f75f21aa</refId>
+          </destination>
+          <source>
+            <refId>30ae71a5-bd4b-4152-924e-fc68373f6ea7</refId>
+          </source>
+          <positions>
+            <point>
+              <x>141.0</x>
+              <y>143.0</y>
+            </point>
+            <point>
+              <x>289.0</x>
+              <y>140.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+      </transitions>
+      <properties/>
+      <opRef>
+        <refId>92256179-50d8-4d0f-ac5b-4703fdc2c1d0</refId>
+      </opRef>
+      <assignments>
+        <flowVariableAssignment id="1136e8bd-e24c-4c56-ac9a-64fcf7a0b797">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_VARIABLE</assignmentTargetType>
+          <contextKey>db.getid.id</contextKey>
+          <expression id="a6e18263-c20d-40ae-9dfe-f45e82fd2a7c">
+            <annotation></annotation>
+            <name>Result Field: db.getid.id</name>
+            <fieldName>db.getid.id</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+      </assignments>
+      <throttleSize>0</throttleSize>
+    </step>
+    <returnStep id="24ff8412-794b-428d-a479-2daeae260621">
+      <annotation></annotation>
+      <name>Resolved : success</name>
+      <bounds>
+        <x>399.0</x>
+        <y>309.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings/>
+      <transitions>
+        <transition id="90de6a34-8103-4a8c-9359-ff41f665f76e">
+          <annotation></annotation>
+          <name>return</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>success</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>24ff8412-794b-428d-a479-2daeae260621</refId>
+          </destination>
+          <source>
+            <refId>24ff8412-794b-428d-a479-2daeae260621</refId>
+          </source>
+          <positions/>
+        </transition>
+      </transitions>
+      <properties/>
+      <returnStepType>RESOLVED</returnStepType>
+      <assignments/>
+    </returnStep>
+    <returnStep id="83e86813-ac4b-4f93-b389-8d65693de9cf">
+      <annotation></annotation>
+      <name>Error : failure</name>
+      <bounds>
+        <x>238.0</x>
+        <y>21.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings/>
+      <transitions>
+        <transition id="61de186a-c947-4eea-92d2-e9510c9b6adb">
+          <annotation></annotation>
+          <name>return</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>83e86813-ac4b-4f93-b389-8d65693de9cf</refId>
+          </destination>
+          <source>
+            <refId>83e86813-ac4b-4f93-b389-8d65693de9cf</refId>
+          </source>
+          <positions/>
+        </transition>
+      </transitions>
+      <properties/>
+      <returnStepType>ERROR</returnStepType>
+      <assignments/>
+    </returnStep>
+    <step id="ebb18cd7-30e6-481f-8dc1-df13f75f21aa">
+      <annotation></annotation>
+      <name>DB_GetDetailsBySubscriptionID</name>
+      <bounds>
+        <x>238.0</x>
+        <y>174.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings>
+        <staticBinding id="f5200bf1-faff-4306-a5fd-35ff106b9010">
+          <annotation></annotation>
+          <assignFromContext>true</assignFromContext>
+          <assignToContext>true</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>db.getdetails.csasvcuuid</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>${db.getid.id}</value>
+          <record>false</record>
+        </staticBinding>
+      </bindings>
+      <transitions>
+        <transition id="3446e584-053f-4c0e-8505-a27ec785c003">
+          <annotation></annotation>
+          <name>failure</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>83e86813-ac4b-4f93-b389-8d65693de9cf</refId>
+          </destination>
+          <source>
+            <refId>ebb18cd7-30e6-481f-8dc1-df13f75f21aa</refId>
+          </source>
+          <positions>
+            <point>
+              <x>289.0</x>
+              <y>140.0</y>
+            </point>
+            <point>
+              <x>262.0</x>
+              <y>38.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+        <transition id="f9687c93-c451-4570-a8ce-ec3bee8039b7">
+          <annotation></annotation>
+          <name>success</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>success</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>4890642c-8414-4ab9-809f-7f1380667608</refId>
+          </destination>
+          <source>
+            <refId>ebb18cd7-30e6-481f-8dc1-df13f75f21aa</refId>
+          </source>
+          <positions>
+            <point>
+              <x>288.0</x>
+              <y>205.0</y>
+            </point>
+            <point>
+              <x>449.0</x>
+              <y>201.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+      </transitions>
+      <properties/>
+      <opRef>
+        <refId>26e16199-ac42-40d7-8725-27b18ed3509d</refId>
+      </opRef>
+      <assignments>
+        <flowVariableAssignment id="28ff146c-d4ab-4ecf-8863-fd1129a00c6a">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_VARIABLE</assignmentTargetType>
+          <contextKey>server.cloudcell</contextKey>
+          <expression id="442f041e-e29b-4e5c-a8b4-53ba2e71e014">
+            <annotation></annotation>
+            <name>Result Field: db.getdetails.cloudcell</name>
+            <fieldName>db.getdetails.cloudcell</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+        <flowVariableAssignment id="63a21416-f68c-4181-a127-1248178af75b">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_VARIABLE</assignmentTargetType>
+          <contextKey>server.hasregbackup</contextKey>
+          <expression id="cb09c653-ea5e-48af-992f-1a900922f314">
+            <annotation></annotation>
+            <name>Result Field: db.getdetails.hasregbackup</name>
+            <fieldName>db.getdetails.hasregbackup</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+        <flowVariableAssignment id="94a75e4c-6f54-4723-887a-999fffe25d2c">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_VARIABLE</assignmentTargetType>
+          <contextKey>server.ishpmanaged</contextKey>
+          <expression id="72ec9225-1b3f-486e-808a-ac127bf0e390">
+            <annotation></annotation>
+            <name>Result Field: db.getdetails.ishpmanaged</name>
+            <fieldName>db.getdetails.ishpmanaged</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+        <flowVariableAssignment id="51499c63-7a21-4c16-8273-f79cfa38ce76">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_VARIABLE</assignmentTargetType>
+          <contextKey>server.os</contextKey>
+          <expression id="32a855c9-f919-4722-875b-60eb8405b714">
+            <annotation></annotation>
+            <name>Result Field: db.getdetails.iotemplate</name>
+            <fieldName>db.getdetails.iotemplate</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters>
+              <replaceAllFilter id="8de29c8b-7702-43d5-ad2d-c291f9e50087">
+                <annotation></annotation>
+                <name>Replace</name>
+                <ignoreCase>false</ignoreCase>
+                <searchString>_</searchString>
+                <replaceString>|</replaceString>
+                <replaceType>ALL</replaceType>
+              </replaceAllFilter>
+              <tableFilter id="00bb5453-2c8b-4e5c-9fe0-39a0e1fb14d3">
+                <annotation></annotation>
+                <name>Table</name>
+                <ascending>false</ascending>
+                <columnDelimiter>PIPE</columnDelimiter>
+                <firstRowHeader>false</firstRowHeader>
+                <lineDelimintor>NEWLINE</lineDelimintor>
+                <selectCol>1</selectCol>
+                <selectHeight>1</selectHeight>
+                <selectRow>0</selectRow>
+                <selectWidth>1</selectWidth>
+                <sortColumn>-1</sortColumn>
+                <stripFirstRow>false</stripFirstRow>
+              </tableFilter>
+              <caseFilter id="a0a578ad-8c69-4d84-8b2d-96d448cac7f7">
+                <annotation></annotation>
+                <name>Diff Case</name>
+                <toUpper>true</toUpper>
+              </caseFilter>
+            </filters>
+          </expression>
+        </flowVariableAssignment>
+        <flowVariableAssignment id="eddda623-e7a4-4198-a904-3fa669763a6a">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_VARIABLE</assignmentTargetType>
+          <contextKey>server.vcenter</contextKey>
+          <expression id="7132e969-82f2-4d8a-9aae-f02b9a61ed2a">
+            <annotation></annotation>
+            <name>Result Field: db.getdetails.vcenter</name>
+            <fieldName>db.getdetails.vcenter</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+        <flowVariableAssignment id="c5f09429-12ad-408b-b031-710292058d4a">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_VARIABLE</assignmentTargetType>
+          <contextKey>server.iohost</contextKey>
+          <expression id="3a7621c8-636a-49d3-aef7-25526404da82">
+            <annotation></annotation>
+            <name>Result Field: db.getdetails.iohost</name>
+            <fieldName>db.getdetails.iohost</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+        <flowVariableAssignment id="09d8c88d-d6f2-439d-ad3d-a14f1c5b342a">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_VARIABLE</assignmentTargetType>
+          <contextKey>server.customer</contextKey>
+          <expression id="ad3861f6-a916-4fe6-8e5d-96e4379289cb">
+            <annotation></annotation>
+            <name>Result Field: db.getdetails.custid</name>
+            <fieldName>db.getdetails.custid</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+        <flowVariableAssignment id="2bd81ab4-5120-4ab5-bba4-8f12eb5ee94e">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_VARIABLE</assignmentTargetType>
+          <contextKey>server.hostname</contextKey>
+          <expression id="2bc93a18-a0e9-47a9-8237-be29a86efee6">
+            <annotation></annotation>
+            <name>Result Field: db.getdetails.hostname</name>
+            <fieldName>db.getdetails.hostname</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+        <flowVariableAssignment id="dc33310a-e0a0-44db-b1ab-683924bc32d2">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_VARIABLE</assignmentTargetType>
+          <contextKey>server.bakvlangid</contextKey>
+          <expression id="561167b2-d602-42bd-93a2-f59a8b0c1f3c">
+            <annotation></annotation>
+            <name>Result Field: db.getdetails.bakvlangid</name>
+            <fieldName>db.getdetails.bakvlangid</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+        <flowVariableAssignment id="0c3cfc4b-1f71-4a9a-abef-460b2b315ca9">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_VARIABLE</assignmentTargetType>
+          <contextKey>server.type</contextKey>
+          <expression id="0ea5a026-177f-46d2-8911-ea3ff63dd8a0">
+            <annotation></annotation>
+            <name>Result Field: db.getdetails.type</name>
+            <fieldName>db.getdetails.type</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+      </assignments>
+      <throttleSize>0</throttleSize>
+    </step>
+    <step id="4890642c-8414-4ab9-809f-7f1380667608">
+      <annotation></annotation>
+      <name>DB_GetVlanInfo</name>
+      <bounds>
+        <x>399.0</x>
+        <y>174.0</y>
+      </bounds>
+      <layer>-1</layer>
+      <hideInbound>false</hideInbound>
+      <addResultToRunContext>false</addResultToRunContext>
+      <isCriticalStep>false</isCriticalStep>
+      <isNonBlocking>false</isNonBlocking>
+      <isParallelStep>false</isParallelStep>
+      <isSingleResponse>false</isSingleResponse>
+      <recordInHistory>false</recordInHistory>
+      <recordRawOutput>true</recordRawOutput>
+      <recordPrimaryOutput>true</recordPrimaryOutput>
+      <checkPointStep>true</checkPointStep>
+      <historyCheckPointStep>true</historyCheckPointStep>
+      <scriptResultStep>false</scriptResultStep>
+      <userPrompt></userPrompt>
+      <bindings>
+        <staticBinding id="b6b7643f-419f-400a-991f-ae09b64ebbb2">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>ccname</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>${server.cloudcell}</value>
+          <record>false</record>
+        </staticBinding>
+        <staticBinding id="ba2d1828-48db-45b0-98b0-35068da51059">
+          <annotation></annotation>
+          <assignFromContext>false</assignFromContext>
+          <assignToContext>false</assignToContext>
+          <inputType>STRING</inputType>
+          <isList>false</isList>
+          <required>true</required>
+          <isPersisted>true</isPersisted>
+          <inputSymbol>vlangid</inputSymbol>
+          <listDelimiter>,</listDelimiter>
+          <value>${server.bakvlangid}</value>
+          <record>false</record>
+        </staticBinding>
+      </bindings>
+      <transitions>
+        <transition id="799c7184-4287-478b-ba32-bc70168df932">
+          <annotation></annotation>
+          <name>success</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>success</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>24ff8412-794b-428d-a479-2daeae260621</refId>
+          </destination>
+          <source>
+            <refId>4890642c-8414-4ab9-809f-7f1380667608</refId>
+          </source>
+          <positions>
+            <point>
+              <x>449.0</x>
+              <y>201.0</y>
+            </point>
+            <point>
+              <x>327.0</x>
+              <y>379.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+        <transition id="27156256-1d1c-4034-a34f-a87273fb633e">
+          <annotation></annotation>
+          <name>failure</name>
+          <command>NEXT</command>
+          <linkMode>false</linkMode>
+          <responseSymbol>failure</responseSymbol>
+          <shouldHandoff>false</shouldHandoff>
+          <transitionValue>0.0</transitionValue>
+          <destination>
+            <refId>83e86813-ac4b-4f93-b389-8d65693de9cf</refId>
+          </destination>
+          <source>
+            <refId>4890642c-8414-4ab9-809f-7f1380667608</refId>
+          </source>
+          <positions>
+            <point>
+              <x>449.0</x>
+              <y>201.0</y>
+            </point>
+            <point>
+              <x>343.0</x>
+              <y>51.0</y>
+            </point>
+          </positions>
+          <labelPosition>
+            <x>333.0</x>
+            <y>0.0</y>
+          </labelPosition>
+        </transition>
+      </transitions>
+      <properties/>
+      <opRef>
+        <refId>a98e6a55-6ce3-467f-b906-22cc568ded85</refId>
+      </opRef>
+      <assignments>
+        <flowVariableAssignment id="8922572a-6de1-4f7f-bfe9-8a642a9750b9">
+          <annotation></annotation>
+          <name>assignment</name>
+          <action>OVERWRITE</action>
+          <assignmentTargetType>FLOW_OUTPUT_FIELD</assignmentTargetType>
+          <contextKey>server.dp.host</contextKey>
+          <expression id="1153f216-c2fe-4ae3-8f1a-bc0860180f5e">
+            <annotation></annotation>
+            <name>Result Field: db.vlaninfo.DP</name>
+            <fieldName>db.vlaninfo.DP</fieldName>
+            <sourceType>RAWRESULT</sourceType>
+            <filters/>
+          </expression>
+        </flowVariableAssignment>
+      </assignments>
+      <throttleSize>0</throttleSize>
+    </step>
+  </steps>
+  <startSteps>30ae71a5-bd4b-4152-924e-fc68373f6ea7</startSteps>
+</flow>

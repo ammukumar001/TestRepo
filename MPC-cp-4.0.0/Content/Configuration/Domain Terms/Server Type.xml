@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domainTerm id="71a879de-a802-4a23-a958-b0f60facd09f">
+  <annotation>71a879de-a802-4a23-a958-b0f60facd09f.description</annotation>
+  <name>Server Type</name>
+  <storage>
+    <domainTermValue id="54d52a9e-8237-4420-afdf-d3b1041fd7f4">
+      <annotation></annotation>
+      <name>Physical</name>
+    </domainTermValue>
+    <domainTermValue id="c4eabcba-5779-405f-8eb2-c12a158d3d5b">
+      <annotation></annotation>
+      <name>Virtual</name>
+    </domainTermValue>
+  </storage>
+</domainTerm>

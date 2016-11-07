@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="e70802de-037f-4b6a-bdda-981658a60401">
+  <annotation></annotation>
+  <name>isVirtual</name>
+  <categories/>
+  <inputs>
+    <staticBinding id="071d6e89-29fe-4bc8-b96c-802046ba8f0b">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>field1</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="610429a1-df7a-4c60-a61b-50acc5f2fd30">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey></fromContextKey>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <recordKey></recordKey>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Field_1</inputSymbol>
+      <listDelimiter></listDelimiter>
+      <value>${field1}</value>
+      <record>false</record>
+    </staticBinding>
+  </inputs>
+  <scriptlet id="5c8aa441-84c1-4a07-97ef-58a04d0208f7">
+    <annotation></annotation>
+    <name>Operation isVirtual (e70802de-037f-4b6a-bdda-981658a60401)</name>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="0a9b3a5d-8f69-43b4-b1b8-0c56e0eacf37">
+      <annotation></annotation>
+      <name>Yes</name>
+      <isDefault>true</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules>
+        <expression id="f41f6a82-0a0a-4571-be9e-920d16272c41">
+          <annotation></annotation>
+          <name>Field 1</name>
+          <fieldName>Field_1</fieldName>
+          <sourceType>RAWRESULT</sourceType>
+          <containsEvaluator id="8027256c-ebf3-4c63-b283-cc6bf0b111d4">
+            <annotation></annotation>
+            <name>Config Item</name>
+            <text>V</text>
+            <ignoreCase>true</ignoreCase>
+            <matchType>EXACT_MATCH</matchType>
+          </containsEvaluator>
+          <filters/>
+        </expression>
+      </matchRules>
+    </opResponse>
+    <opResponse id="1ada1fdf-68f8-4715-aeb7-994df7e74251">
+      <annotation></annotation>
+      <name>No</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules>
+        <expression id="531966e5-2c01-45d9-820c-336582f28aac">
+          <annotation></annotation>
+          <name>Field 1</name>
+          <fieldName>Field_1</fieldName>
+          <sourceType>RAWRESULT</sourceType>
+          <containsEvaluator id="ac841745-3121-44b0-bfd5-1c55664d2b37">
+            <annotation></annotation>
+            <name>Config Item</name>
+            <text>P</text>
+            <ignoreCase>true</ignoreCase>
+            <matchType>EXACT_MATCH</matchType>
+          </containsEvaluator>
+          <filters/>
+        </expression>
+      </matchRules>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="2045d689-0b36-4957-8fd7-979d355740fa">
+    <annotation></annotation>
+    <name>Field 1</name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="bfc9e529-b3f1-489b-9fd5-9b48761cf012">
+    <baseIcon>astrologer.png</baseIcon>
+    <basePath>/Others/</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>

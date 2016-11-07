@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <scm>
+        <connection>scm:svn:http://mydtbld0026.isr.hp.com:18080/svn/content/tags/content-unified-commons-1.1.41</connection>
+    </scm>
+    <distributionManagement>
+        <repository>
+            <id>nexus-repository</id>
+            <name>nexus repository</name>
+            <url>http://16.60.152.89:8081/nexus/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshot-repository</id>
+            <name>nexus snapshots repository</name>
+            <url>http://16.60.152.89:8081/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <groupId>com.hp.oo.contentcommons</groupId>
+    <artifactId>content-unified-commons</artifactId>
+    <version>1.1.41</version>
+    <modules>
+        <module>sql-commons</module>
+        <module>content-commons</module>
+        <module>sap-commons</module>
+        <module>ssh-commons</module>
+        <module>oo-http-client</module>
+        <module>utils-commons</module>
+        <module>telnet-commons</module>
+        <module>io-commons</module>
+        <module>xml-commons</module>
+        <module>webservice-commons</module>
+        <module>reflection-commons</module>
+        <module>ssl-commons</module>
+        <module>cmd-commons</module>
+    </modules>
+    <packaging>pom</packaging>
+
+    <properties>
+        <sdk.group>com.hp.oo.sdk</sdk.group>
+        <oo-sdk.version>10.20.6</oo-sdk.version>
+        <compiler.source.version>1.7</compiler.source.version>
+        <compiler.target.version>1.7</compiler.target.version>
+    </properties>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.1</version>
+                    <configuration>
+                        <source>${compiler.source.version}</source>
+                        <target>${compiler.target.version}</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>

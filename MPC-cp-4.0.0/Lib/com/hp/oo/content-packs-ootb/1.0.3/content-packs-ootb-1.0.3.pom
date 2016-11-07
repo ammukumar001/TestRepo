@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.hp.oo</groupId>
+	<artifactId>content-packs-ootb</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0.3</version>
+	<properties>
+		<scm_user>${username}</scm_user>
+		<scm_passwd>${password}</scm_passwd>
+        <oo-dotnet.group>com.hp.oo.dotnet</oo-dotnet.group>
+        <oo-dotnet.version>102.3</oo-dotnet.version>
+        <oo-sdk.group>com.hp.oo.sdk</oo-sdk.group>
+        <oo-sdk.version>10.20.6</oo-sdk.version>
+	</properties> 
+	<scm>
+		<connection>scm:svn:http://mydtbld0026.isr.hp.com:18080/svn/content/tags/content-packs-ootb-1.0.3</connection>
+	</scm>
+	<distributionManagement>
+		<repository>
+			<id>nexus-repository</id>
+			<name>nexus repository</name>
+			<url>http://16.60.152.89:8081/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus-snapshot-repository</id>
+			<name>nexus snapshots repository</name>
+			<url>http://16.60.152.89:8081/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<!-- action plugins do not work with older versions -->
+				<plugin>
+					<artifactId>maven-enforcer-plugin</artifactId>
+					<version>1.0.1</version>
+					<executions>
+						<execution>
+							<id>enforce-versions</id>
+							<goals>
+								<goal>enforce</goal>
+							</goals>
+							<configuration>
+								<rules>
+									<requireMavenVersion>
+										<version>3.0.3</version>
+									</requireMavenVersion>
+								</rules>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>exec-maven-plugin</artifactId>
+					<version>1.2.1</version>
+
+					<dependencies>
+						<dependency>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>cp-inspector</artifactId>
+							<version>${cp-inspector.version}</version>
+						</dependency>
+						<dependency>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>hpln-index-generator</artifactId>
+							<version>${cp-inspector.version}</version>
+						</dependency>
+					</dependencies>
+
+					<executions>
+						<execution>
+							<id>exec cp-inspector</id>
+							<phase>${cp.inspector.phase}</phase>
+							<goals>
+								<goal>java</goal>
+							</goals>
+
+							<configuration>
+								<mainClass>com.hp.oo.content.utilities.repository.Main</mainClass>
+								<includePluginDependencies>true</includePluginDependencies>
+								<includeProjectDependencies>false</includeProjectDependencies>
+
+								<executableDependency>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>cp-inspector</artifactId>
+								</executableDependency>
+
+								<arguments>
+									<argument>-cp1</argument>
+									<argument>.repository\com\hp\oo\${project.name}\${current.release.version}\${project.name}-${current.release.version}.jar</argument>
+									<argument>-cp2</argument>
+									<argument>${project.build.directory}/${project.name}-${project.version}.jar</argument>
+									<argument>-outputFolder</argument>
+									<argument>${cp-inspector.output.folder}</argument>
+									<argument>-listing</argument>
+									<argument>-bestpractices</argument>
+									<argument>-integrationMatrix</argument>
+									<argument>${project.build.outputDirectory}/integrationmatrix/${project.name}-integration-matrix.properties</argument>
+									<!--<argument>-checkForOrphanDescriptions</argument>-->
+									<argument>-releasenotes</argument>
+									<argument>-checkForThirdPartyChanges</argument>
+								</arguments>
+							</configuration>
+
+						</execution>
+						<execution>
+							<id>exec hpln index</id>
+							<phase>${hpln.index}</phase>
+							<goals>
+								<goal>java</goal>
+							</goals>
+
+							<configuration>
+								<mainClass>com.hp.oo.content.cpindex.Main</mainClass>
+								<includePluginDependencies>true</includePluginDependencies>
+								<includeProjectDependencies>false</includeProjectDependencies>
+
+								<executableDependency>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>hpln-index-generator</artifactId>
+								</executableDependency>
+
+								<arguments>
+									<argument>-c</argument>
+									<argument>${project.build.directory}/${project.name}-${project.version}.jar</argument>
+									<argument>-p</argument>
+									<argument>${project.build.directory}/HPLN Index Reports/${project.name}-${project.version}.json</argument>                                   
+								</arguments>
+							</configuration>
+
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>1.7</version>
+					<executions>
+						<execution>
+							<id>replace bcprov version </id>
+							<phase>prepare-package</phase>
+							<goals>
+								<goal>run</goal>
+							</goals>
+							<configuration>
+								<tasks>
+									<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
+									<if>
+										<available file="${project.build.outputDirectory}/Lib/org/apache/ws/security/wss4j/1.5.7/wss4j-1.5.7.pom" type="file" />
+										<then>
+
+											<replace file="${project.build.outputDirectory}/Lib/org/apache/ws/security/wss4j/1.5.7/wss4j-1.5.7.pom" failonnoreplacements="true">
+												<replacetoken>
+													<![CDATA[<id>jdk14</id>]]></replacetoken>
+												<replacevalue>
+													<![CDATA[<id>jdk16</id>]]></replacevalue>
+											</replace>
+											<replace file="${project.build.outputDirectory}/Lib/org/apache/ws/security/wss4j/1.5.7/wss4j-1.5.7.pom" failonnoreplacements="true">
+												<replacetoken>
+													<![CDATA[<jdk>1.4</jdk>]]></replacetoken>
+												<replacevalue>
+													<![CDATA[<jdk>1.6</jdk>]]></replacevalue>
+											</replace>
+											<replace file="${project.build.outputDirectory}/Lib/org/apache/ws/security/wss4j/1.5.7/wss4j-1.5.7.pom" failonnoreplacements="true">
+												<replacetoken>
+													<![CDATA[<artifactId>bcprov-jdk14</artifactId>]]></replacetoken>
+												<replacevalue>
+													<![CDATA[<artifactId>bcprov-jdk16</artifactId>]]></replacevalue>
+											</replace>
+											<replace file="${project.build.outputDirectory}/Lib/org/apache/ws/security/wss4j/1.5.7/wss4j-1.5.7.pom" failonnoreplacements="true">
+												<replacetoken>
+													<![CDATA[<bcprov.jdk14.version>140</bcprov.jdk14.version>]]></replacetoken>
+												<replacevalue>
+													<![CDATA[<bcprov.jdk14.version>1.46</bcprov.jdk14.version>]]></replacevalue>
+											</replace>
+											<!-- replace the groupID for bcprov-jdk16 -->
+											<replaceregexp file="${project.build.outputDirectory}/Lib/org/apache/ws/security/wss4j/1.5.7/wss4j-1.5.7.pom" match="groupId&gt;bouncycastle" replace="groupId&gt;org.bouncycastle">
+											</replaceregexp>
+
+										</then>
+									</if>
+
+								</tasks>
+
+							</configuration>
+						</execution>
+
+						<execution>
+							<!-- This is done in order to avoid legal issues on the tagsoup library version 0.9.7 that is under GPL license-->
+							<id>replace tagsoup version </id>
+							<phase>prepare-package</phase>
+							<goals>
+								<goal>run</goal>
+							</goals>
+							<configuration>
+								<tasks>
+									<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="maven.plugin.classpath" />
+
+									<if>
+										<available file="${project.build.outputDirectory}/Lib/xom/xom/1.0b3/xom-1.0b3.pom" type="file" />
+										<then>
+											<replace file="${project.build.outputDirectory}/Lib/xom/xom/1.0b3/xom-1.0b3.pom" failonnoreplacements="true">
+												<replacetoken>
+													<![CDATA[<version>0.9.7</version>]]></replacetoken>
+												<replacevalue>
+													<![CDATA[<version>1.2.1</version>]]></replacevalue>
+											</replace>
+										</then>
+									</if>
+								</tasks>
+							</configuration>
+						</execution>
+						<execution>
+							<id>sign CP</id>
+							<phase>${sign.cp.phase}</phase>
+							<goals>
+								<goal>run</goal>
+							</goals>						  
+							<configuration>
+								<target name="code-sign" unless="dont.sign">
+									<property environment="env" />									
+									<echo>signing CP
+										${project.build.directory}/${project.artifactId}-${project.version}.jar</echo>
+									<available property="is.CP.there" file="${project.build.directory}/${project.artifactId}-${project.version}.jar" />
+									<echo>${is.CP.there}</echo>
+									<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpathref="maven.plugin.classpath" />
+									<if>
+										<and>
+											<available file="${project.build.directory}/${project.artifactId}-${project.version}.jar" />
+										</and>
+										<then>
+											<if>
+												<isset property="env.HPCSSPATH" />
+												<then>
+													<echo message="HPCSSPATH is set" />
+													<property name="signed.files.path" value="signed_files" />
+													<exec executable="cmd">
+														<arg value="/c" />
+														<arg value="HPSign" />
+														<arg value="-r" />
+														<arg value="OOsignJava" />
+														<arg value="-c" />
+														<arg value="C:\codesign\HPCSS\HPSignClient\HPSign.conf" />
+														<arg value="-i" />
+														<arg value="${project.build.directory}/${project.artifactId}-${project.version}.jar" />
+														<arg value="-o" />
+														<arg value="${signed.files.path}" />
+														<arg value="-obj" />
+														<arg value="JarFile_batch_Sign_Local_Timestamp" />
+														<env key="JAVA_HOME" value="C:\jenkins\tools\jdk1.6.0_29" />
+														<env key="PATH" path="C:\jenkins\tools\jdk1.6.0_29\bin; ${env.PATH}" />
+													</exec>
+													<echo>replacing
+														${project.artifactId}-${project.version}.jar with the
+														signed version from
+														${signed.files.path}/${project.artifactId}-${project.version}.jar
+													</echo>
+													<move file="${signed.files.path}/${project.artifactId}-${project.version}.jar" tofile="${project.build.directory}/${project.artifactId}-${project.version}.jar" overwrite="true" verbose="true" />
+												</then>
+												<else>
+													<echo message="HPCSSPATH is not set - the code sign utility is not installed" />
+												</else>
+											</if>
+										</then>
+										<else>
+											<echo message="no CP in this project or missing HPCSS installation - skipping code signing" />
+										</else>
+									</if>
+								</target>
+							</configuration>
+						</execution>
+					</executions>
+					<dependencies>
+						<dependency>
+							<groupId>ant-contrib</groupId>
+							<artifactId>ant-contrib</artifactId>
+							<version>1.0b3</version>
+							<exclusions>
+								<exclusion>
+									<groupId>ant</groupId>
+									<artifactId>ant</artifactId>
+								</exclusion>
+							</exclusions>
+						</dependency>
+						<dependency>
+							<groupId>org.apache.ant</groupId>
+							<artifactId>ant-nodeps</artifactId>
+							<version>1.8.1</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>buildnumber-maven-plugin</artifactId>
+					<version>1.2</version>
+					<executions>
+						<execution>
+							<phase>initialize</phase>
+							<goals>
+								<goal>create-timestamp</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<doCheck>false</doCheck>
+						<doUpdate>false</doUpdate>
+						<!--Aug 22, 2013 6\:04\:04 PM-->
+						<timestampFormat>MMM dd, yyyy h:mm:ss a</timestampFormat>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>                
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.7</version>
+						<executions>
+							<execution>
+								<id>Create template file</id>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<phase>${transform.xmls.phase}</phase>
+								<configuration>															
+									<target>								
+										<touch file="${project.build.directory}/changeVersion.xsl" />								
+										<echo file="${project.build.directory}/changeVersion.xsl">
+											<![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+								<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+								<xsl:output method="xml" indent="yes" />
+								<xsl:param name="pluginVersion">${project.version}</xsl:param>
+								<xsl:template match="node()|@*">
+								<xsl:copy>
+								<xsl:apply-templates select="node()|@*" />
+								</xsl:copy>
+								</xsl:template>
+								<xsl:template match="/operation/plugin/version/text()">
+								<xsl:value-of select="$pluginVersion" />
+								</xsl:template> 
+								</xsl:stylesheet>]]>
+										</echo>
+									</target>
+								</configuration>
+							</execution>							
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>xml-maven-plugin</artifactId>
+						<version>1.0</version>
+						<executions>
+							<execution>
+								<phase>${transform.xmls.phase}</phase>
+								<goals>
+									<goal>transform</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>								
+							<transformationSets>
+								<transformationSet>
+									<dir>${project.basedir}/src/main/resources/${project.parent.artifactId}-project/Content/Library</dir> 
+									<outputDir>${project.basedir}/src/main/resources/${project.parent.artifactId}-project/Content/Library</outputDir>                                   
+									<stylesheet>${project.build.directory}/changeVersion.xsl</stylesheet>
+									<includes>
+										<include>**/*.xml</include>
+									</includes>
+									<parameters>
+										<parameter>
+											<name>pluginVersion</name>
+											<value>${opsVersions}</value>
+										</parameter>
+									</parameters>
+								</transformationSet>
+							</transformationSets>
+						</configuration>
+					</plugin>
+
+					<!-- SCM PLUGIN TO CHECKIN THE CHANGES DONE ON THE .XML FILES BY THE <artifactId>replacer</artifactId>-->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-scm-plugin</artifactId>
+						<version>1.8.1</version>
+						<executions>
+							<execution>
+								<id>add-changes-to-scm</id>
+								<phase>${transform.xmls.phase}</phase>
+								<goals>
+									<goal>checkin</goal>
+								</goals>
+								<configuration>															
+									<connectionType>connection</connectionType>
+									<username>${scm_user}</username>
+									<password>${scm_passwd}</password>
+									<basedir>${project.basedir}/src/main/resources</basedir>
+									<includes>**/*.xml</includes>
+									<message>Replace operation version with release version ${opsVersions}</message>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>										
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<!-- This profile installs the content pack plugin that you are building in the default OO Studio repository -->
+            <id>cptostudio</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-install-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>install-file</goal>
+                                </goals>
+                                <configuration>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>${project.artifactId}</artifactId>
+                                    <version>${project.version}</version>
+                                    <packaging>${project.packaging}</packaging>
+                                    <file>target/${project.build.finalName}.jar</file>
+                                    <pomFile>pom.xml</pomFile>
+                                    <localRepositoryPath>${user.home}/.oo/data/maven</localRepositoryPath>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+	</profiles>
+	<modules>
+		<module>oo-thirdparty</module>
+		<module>oo-thirdparty-excluded</module>
+		<module>oo-base</module>
+		<module>oo-cloud</module>
+		<module>oo-hp-solutions</module>
+		<module>oo-virtualization</module>
+		<module>oo-operating-systems</module>
+		<module>oo-middleware</module>
+		<module>oo-databases</module>
+		<module>oo-business-applications</module>
+		<module>oo-it-operations</module>
+		<module>oo-sap</module>
+		<module>oo-cloud-orchestration</module>
+		<module>oo-utility-orchestration</module>
+		<module>oo-infrastructure-orchestration</module>
+	</modules>
+</project>

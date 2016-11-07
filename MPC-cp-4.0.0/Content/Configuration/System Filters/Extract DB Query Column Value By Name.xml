@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scriptletFilter id="b78e5871-e5c1-4e09-95a0-451b1c785cd5">
+  <annotation>b78e5871-e5c1-4e09-95a0-451b1c785cd5.description</annotation>
+  <name>Extract DB Query Column Value By Name</name>
+  <scriptlet id="78a252e1-5f3e-4e74-868a-9845ec1b93ea">
+    <annotation></annotation>
+    <name>default</name>
+    <script>
+
+var columnNames = new java.lang.String( scriptletContext.getLocal(&quot;columnNames&quot;)).trim();
+ 
+var targetColumnName = new java.lang.String(scriptletContext.getLocal(&quot;targetColumnName&quot;));
+
+//columnNames=&quot;RESPOOLID&lt;&gt;VMMP_TYPE\r\n&quot;.trim();
+//targetColumnName=&quot;VMMP_TYPE&quot;;
+var queryResultTable = new java.lang.String(scriptletInput);
+
+// search for the target column name, so that we get the index.
+var columnNamesArray = columnNames.split(&quot;&lt;&gt;&quot;);
+var queryResultArray = queryResultTable.split(&quot;&lt;&gt;&quot;);
+var value=&quot;dummy&quot;;
+var i=0;
+for(i=0; i&lt;columnNamesArray.length; i ++ )
+{
+   var columnName = columnNamesArray[i];
+  
+   if (targetColumnName.equalsIgnoreCase(columnName))
+      {
+        //match
+        scriptletResult = queryResultArray[i].trim();
+        break;
+       }
+ } </script>
+    <type>RHINO</type>
+  </scriptlet>
+</scriptletFilter>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<selectionList id="7e9736e6-5b21-410e-b799-7dfb88f15624">
+  <annotation></annotation>
+  <name>VM Platforms</name>
+  <storage>
+    <string>vCenter</string>
+    <string>SCVMM</string>
+  </storage>
+</selectionList>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<operation id="fdcad1e3-bbf3-40db-a95b-c11cf4395dbb">
+  <annotation>fdcad1e3-bbf3-40db-a95b-c11cf4395dbb.description</annotation>
+  <name>EmailActionHandler</name>
+  <categories/>
+  <inputs>
+    <staticBinding id="02b47dc1-4c46-4a93-aa7b-59dd2944ab2c">
+      <annotation></annotation>
+      <assignFromContext>true</assignFromContext>
+      <assignToContext>true</assignToContext>
+      <inputType>STRING</inputType>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Item</inputSymbol>
+      <listDelimiter>,</listDelimiter>
+      <value></value>
+      <record>false</record>
+    </staticBinding>
+    <staticBinding id="252a2cb6-2b4e-4848-af1c-de9a2463783d">
+      <annotation></annotation>
+      <toContextKey></toContextKey>
+      <fromContextKey></fromContextKey>
+      <assignFromContext>false</assignFromContext>
+      <assignToContext>false</assignToContext>
+      <inputType>STRING</inputType>
+      <recordKey></recordKey>
+      <isList>false</isList>
+      <required>false</required>
+      <isPersisted>true</isPersisted>
+      <inputSymbol>Field_1</inputSymbol>
+      <listDelimiter></listDelimiter>
+      <value>${Item}</value>
+      <record>false</record>
+    </staticBinding>
+  </inputs>
+  <scriptlet id="f0c71fa9-5c1b-4f55-998f-4d3e0348a7c1">
+    <annotation></annotation>
+    <name>Operation EmailActionHandler (fdcad1e3-bbf3-40db-a95b-c11cf4395dbb)</name>
+    <type>RHINO</type>
+  </scriptlet>
+  <possibleResponses>
+    <opResponse id="f04aa250-f373-470d-9a65-d10494d0ec12">
+      <annotation></annotation>
+      <name>SERVER</name>
+      <isDefault>true</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules>
+        <expression id="c7854a10-693d-4953-b840-f6dac13b117d">
+          <annotation></annotation>
+          <name>Field 1</name>
+          <fieldName>Field_1</fieldName>
+          <sourceType>RAWRESULT</sourceType>
+          <compare id="10e7667d-8738-4243-acaf-c8929bd690d3">
+            <annotation></annotation>
+            <name>Config Item</name>
+            <text>SERVER</text>
+            <matchType>=</matchType>
+          </compare>
+          <filters/>
+        </expression>
+      </matchRules>
+    </opResponse>
+    <opResponse id="cf4be1fa-7107-484f-8122-f165b7e23628">
+      <annotation></annotation>
+      <name>DISK</name>
+      <isDefault>false</isDefault>
+      <onFailure>false</onFailure>
+      <type>RESOLVED</type>
+      <matchRules>
+        <expression id="61382a36-6be9-4c88-a102-34dafc4455ac">
+          <annotation></annotation>
+          <name>Field 1</name>
+          <fieldName>Field_1</fieldName>
+          <sourceType>RAWRESULT</sourceType>
+          <compare id="cd86cba6-f98f-4f45-9cd0-97bfdcefb44b">
+            <annotation></annotation>
+            <name>Config Item</name>
+            <text>DISK</text>
+            <matchType>=</matchType>
+          </compare>
+          <filters/>
+        </expression>
+      </matchRules>
+    </opResponse>
+  </possibleResponses>
+  <availableResultExpressions/>
+  <resultExpression id="02af3efb-280e-46d9-bd28-ed0902dd4ccc">
+    <annotation></annotation>
+    <name></name>
+    <fieldName>Field_1</fieldName>
+    <sourceType>RAWRESULT</sourceType>
+    <filters/>
+  </resultExpression>
+  <iconSpec id="5815d5a7-c801-4287-9eab-d033b7ff4c33">
+    <baseIcon>atom.png</baseIcon>
+    <basePath>/Others/</basePath>
+    <readOnly>false</readOnly>
+    <layers/>
+  </iconSpec>
+  <opRef>
+    <refId>ddd79f22-8b1e-4605-88d5-d912bb2da2b9</refId>
+  </opRef>
+  <fieldValues/>
+  <groupAliasRef>
+    <refId>5233030c-af46-432b-a682-b326ca6bf2ae</refId>
+    <refName>RAS_Operator_Path</refName>
+  </groupAliasRef>
+</operation>
